@@ -56,9 +56,9 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\playerMovement.cs" />
-    <Compile Include="Assets\rotation.cs" />
-    <Compile Include="Assets\celesteGaming.cs" />
+    <Compile Include="Assets\Code\celesteGaming.cs" />
+    <Compile Include="Assets\Code\playerMovement.cs" />
+    <Compile Include="Assets\Code\rotation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
