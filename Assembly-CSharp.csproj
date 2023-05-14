@@ -59,6 +59,7 @@
     <Compile Include="Assets\Code\celesteGaming.cs" />
     <Compile Include="Assets\Code\playerMovement.cs" />
     <Compile Include="Assets\Code\rotation.cs" />
+    <Compile Include="Assets\Code\death.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
