@@ -20,15 +20,17 @@ public class playerMovement : MonoBehaviour
     private Vector2 vx;
     private TrailRenderer tr;
     private CircleCollider2D cir;
+    private buttons but;
+    public GameObject canvas;
 
     private float hor;
     private float verti;
     private float timeCooldown;
     private float gravSupremeCalamity;
     private float initialScaleX;
-    private float coyoteTime = 0.2f;
+    private float coyoteTime = 0.3f;
     private float coyoteCooldown;
-    private float jumpTime = 0.05f;
+    private float jumpTime = 0.4f;
     private float jumpBuffer;
 
     [SerializeField] private LayerMask jumpableGround;
@@ -39,12 +41,14 @@ public class playerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         tr = GetComponent<TrailRenderer>();
         cir = GetComponent<CircleCollider2D>();
+        but = canvas.GetComponent<buttons>();
+
         gravSupremeCalamity = rb.gravityScale;
         initialScaleX = transform.localScale.x;
     }
     private bool isGrounded()
     {
-        return Physics2D.BoxCast(cir.bounds.center, cir.bounds.size, 0f , Vector3.down, 1f, jumpableGround);
+        return Physics2D.BoxCast(cir.bounds.center, cir.bounds.size, 0f , Vector3.down, 0.1f, jumpableGround);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -61,13 +65,6 @@ public class playerMovement : MonoBehaviour
             }
             vx.x = 0f;
             rb.velocity = vx;
-        }
-    }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (isGrounded())
-        {
-            dash = true;
         }
     }
     private IEnumerator DashingSwag()
@@ -104,7 +101,7 @@ public class playerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (dashing)
+        if (dashing || but.pause)
         {
             return;
         }
@@ -127,18 +124,20 @@ public class playerMovement : MonoBehaviour
     }
     void Update()
     {
-        if (dashing)
+        if (dashing || but.pause)
         {
             return;
         }
 
         if (isGrounded())
         {
+            dash = true;
             coyoteCooldown = coyoteTime;
         }
         else
         {
-            coyoteCooldown -= Time.deltaTime;
+            
+            coyoteCooldown -= Time.fixedDeltaTime;
         }
 
         if (Input.GetKeyDown(KeyCode.W))
@@ -147,7 +146,7 @@ public class playerMovement : MonoBehaviour
         }
         else
         {
-            jumpBuffer -= Time.deltaTime;
+            jumpBuffer -= Time.fixedDeltaTime;
         }
         hor = Input.GetAxisRaw("Horizontal");
         verti = Input.GetAxis("Vertical");
@@ -171,8 +170,11 @@ public class playerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && dash == true && Time.time > timeCooldown)
         {
             if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W))
-            StartCoroutine(DashingSwag());
-            rb.velocity = new Vector2(hor * dashImpulse * Time.fixedDeltaTime, System.Convert.ToUInt32(ver) * dashImpulse * Time.fixedDeltaTime);
+            {
+                StartCoroutine(DashingSwag());
+                rb.velocity = new Vector2(hor * dashImpulse * Time.fixedDeltaTime, System.Convert.ToUInt32(ver) * dashImpulse * Time.fixedDeltaTime);
+            }
+            
         }
     }
 }
