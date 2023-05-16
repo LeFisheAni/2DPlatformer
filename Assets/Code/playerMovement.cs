@@ -22,6 +22,7 @@ public class playerMovement : MonoBehaviour
     private CircleCollider2D cir;
     private buttons but;
     public GameObject canvas;
+    public GameObject Win;
 
     private float hor;
     private float verti;
@@ -52,6 +53,10 @@ public class playerMovement : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if(collision.gameObject.layer == 9)
+        {
+            Win.SetActive(true);
+        }
         cancelDash = true;
         if (dashing)
         {
@@ -65,6 +70,14 @@ public class playerMovement : MonoBehaviour
             }
             vx.x = 0f;
             rb.velocity = vx;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "kys")
+        {
+            Destroy(gameObject);
         }
     }
     private IEnumerator DashingSwag()

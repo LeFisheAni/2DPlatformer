@@ -10,6 +10,7 @@ public class fadeOut : MonoBehaviour
     public float speed;
     void Start()
     {
+        Time.timeScale = 1;
         StartCoroutine(FadeIn());
     }
 

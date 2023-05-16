@@ -6,6 +6,13 @@ public class buttons : MonoBehaviour
 {
     public bool pause = false;
     public GameObject blur;
+    public buttons but;
+    public GameObject canvas;
+
+    void Start()
+    {
+        but = canvas.GetComponent<buttons>();
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

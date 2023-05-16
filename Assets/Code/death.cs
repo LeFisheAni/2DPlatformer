@@ -1,14 +1,33 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class death : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    public GameObject yippieDeath;
+    public buttons but;
+    public GameObject canvas;
+
+    public void Continue()
     {
-        if (collision.tag == "kys")
+        Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+    void Start()
+    {
+        but = canvas.GetComponent<buttons>();
+    }
+    void Update()
+    {
+        if (GameObject.Find("Stary") == null)
         {
-            Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
+            yippieDeath.SetActive(true);
+            but.pause = true;
+            Time.timeScale = 0;
         }
-        
     }
 }
