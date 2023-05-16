@@ -6,6 +6,8 @@ public class gunRotation : MonoBehaviour
 {
     public GameObject followPlayer;
     public GameObject canvas;
+    public GameObject bullet;
+    public GameObject bulletOrigin;
     private buttons but;
 
     private float initialScaleY;
@@ -17,6 +19,11 @@ public class gunRotation : MonoBehaviour
     }
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Instantiate(bullet, bulletOrigin.transform.position, bulletOrigin.transform.rotation);
+        }
+
         if (!but.pause)
         {
             transform.position = new Vector3 (followPlayer.transform.position.x, followPlayer.transform.position.y, transform.position.z);
